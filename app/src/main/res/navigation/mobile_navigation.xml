@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/nav_main"
+        android:name="kr.ssc.front.ui.main.MainFragment"
+        android:label="@string/menu_main"
+        tools:layout="@layout/fragment_main" >
+
+        <action
+            android:id="@+id/action_check_to_list"
+            app:destination="@id/nav_attendance_list" />
+    </fragment>
+
+    <!-- 출석 조회-->
+    <fragment
+        android:id="@+id/nav_attendance_list"
+        android:name="kr.ssc.front.ui.attendance.ListAttendanceFragment"
+        android:label="@string/menu_attendance_list"
+        tools:layout="@layout/fragment_list_attendance">
+        <action
+            android:id="@+id/action_go_home"
+            app:destination="@id/nav_main" />
+    </fragment>
+
+</navigation>
