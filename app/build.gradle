@@ -69,4 +69,22 @@ dependencies {
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
+//    블록체인인 클라이언트
+    def fabric_sdk = "1.4.4"
+    def logback = "1.2.3"
+    def lombok = "1.18.12"
+    def protobuf = "3.11.0"
+    def jackson = "2.10.0"
+    def caffeine = "2.8.1"
+    def jakarta = "2.3.3"
+    implementation("org.hyperledger.fabric-sdk-java:fabric-sdk-java:$fabric_sdk")
+    implementation("ch.qos.logback:logback-classic:$logback")
+    annotationProcessor("org.projectlombok:lombok:$lombok")
+    implementation("com.google.protobuf:protobuf-java:$protobuf")
+    implementation("com.fasterxml.jackson.core:jackson-databind:$jackson")
+    implementation("com.github.ben-manes.caffeine:caffeine:$caffeine")
+    implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jakarta")
+
+    implementation "org.hyperledger.fabric:fabric-gateway-java:1.4.4"
+
 }
