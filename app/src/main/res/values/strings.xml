@@ -19,8 +19,8 @@
 
     <string name="join_service">서비스 가입</string>
     <string name="apiaddress">http://192.168.35.11:6464</string> <!--집 와이파이-->
-<!--        <string name="apiaddress">http://192.168.219.198:6464</string>-->
-<!--        <string name="apiaddress">http://192.168.43.192:6464</string> &lt;!&ndash;휴대폰 Hotspot&ndash;&gt;-->
+    <!--        <string name="apiaddress">http://192.168.219.198:6464</string>-->
+    <!--        <string name="apiaddress">http://192.168.43.192:6464</string> &lt;!&ndash;휴대폰 Hotspot&ndash;&gt;-->
 
 
     <string name="email_send">/user/email/send</string>
@@ -35,5 +35,7 @@
     <string name="DevelopInfo">개발자 정보</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="blocing">Blocing</string>
+    <string name="subtitle">새로운 학생증을 열다</string>
 
 </resources>

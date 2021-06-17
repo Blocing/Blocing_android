@@ -1,10 +1,51 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor" tools:targetApi="1">@android:color/transparent</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <item name="pf_lock_screen">@style/PinLockScreenStyle</item>
+        <item name="pf_key_button">@style/PinLockButtonStyle</item>
+        <item name="pf_delete_button">@style/PinLockDeleteButtonStyle</item>
+        <item name="pf_title">@style/PinLockTitleStyle</item>
+        <item name="pf_next">@style/PinLockNextButtonStyle</item>
+        <item name="pf_hint">@style/PinLockHintStyle</item>
+    </style>
+
+    <style name="PinLockScreenStyle">
+        <item name="android:background">#6790F3</item>
+        <item name="android:foreground">#6790F3</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="PinLockButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:foreground">@android:color/transparent</item>
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="PinLockDeleteButtonStyle">
+        <item name="android:src">@android:drawable/ic_menu_close_clear_cancel</item>
+    </style>
+
+    <style name="PinLockTitleStyle">
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+
+    <style name="PinLockNextButtonStyle">
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textSize">23sp</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_margin">0dp</item>
+    </style>
+
+    <style name="PinLockHintStyle">
+        <item name="android:textColor">@android:color/black</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -16,4 +57,25 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+
+    <style name="name">
+        <item name="android:textSize">40sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="subTitle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:letterSpacing">-0.02</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+
+    <style name="inputTitle">
+        <item name="android:textColor">#000000</item>
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingTop">1dp</item>
+        <item name="android:paddingRight">10dp</item>
+        <item name="android:paddingBottom">1dp</item>
+        <item name="android:background">@drawable/iconic_round</item>
+    </style>
 </resources>

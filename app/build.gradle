@@ -3,7 +3,7 @@ apply plugin: "androidx.navigation.safeargs"
 
 android {
     compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "kr.ssc.front"
@@ -26,6 +26,17 @@ android {
         }
     }
 
+//    packagingOptions {
+//        exclude 'META-INF/DEPENDENCIES'
+//        exclude 'META-INF/LICENSE'
+//        exclude 'META-INF/LICENSE.txt'
+//        exclude 'META-INF/license.txt'
+//        exclude 'META-INF/NOTICE'
+//        exclude 'META-inF/NOTICE.txt'
+//        exclude 'META-INF/INDEX.LIST'
+//        exclude 'META-INF/notice.txt'
+//        exclude 'META-INF/ASL2.0'
+//    }
 }
 
 dependencies {
@@ -70,21 +81,20 @@ dependencies {
     annotationProcessor "androidx.room:room-compiler:$room_version"
 
 //    블록체인인 클라이언트
-    def fabric_sdk = "1.4.4"
-    def logback = "1.2.3"
-    def lombok = "1.18.12"
-    def protobuf = "3.11.0"
-    def jackson = "2.10.0"
-    def caffeine = "2.8.1"
-    def jakarta = "2.3.3"
-    implementation("org.hyperledger.fabric-sdk-java:fabric-sdk-java:$fabric_sdk")
-    implementation("ch.qos.logback:logback-classic:$logback")
-    annotationProcessor("org.projectlombok:lombok:$lombok")
-    implementation("com.google.protobuf:protobuf-java:$protobuf")
-    implementation("com.fasterxml.jackson.core:jackson-databind:$jackson")
-    implementation("com.github.ben-manes.caffeine:caffeine:$caffeine")
-    implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jakarta")
-
-    implementation "org.hyperledger.fabric:fabric-gateway-java:1.4.4"
+//    def fabric_sdk = "1.4.4"
+//    def logback = "1.2.3"
+//    def lombok = "1.18.12"
+//    def protobuf = "3.11.0"
+//    def jackson = "2.10.0"
+//    def caffeine = "2.8.1"
+//    def jakarta = "2.3.3"
+//    implementation("org.hyperledger.fabric-sdk-java:fabric-sdk-java:$fabric_sdk")
+//    implementation("ch.qos.logback:logback-classic:$logback")
+//    annotationProcessor("org.projectlombok:lombok:$lombok")
+//    implementation("com.google.protobuf:protobuf-java:$protobuf")
+//    implementation("com.fasterxml.jackson.core:jackson-databind:$jackson")
+//    implementation("com.github.ben-manes.caffeine:caffeine:$caffeine")
+//    implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jakarta")
+//    implementation "org.hyperledger.fabric:fabric-gateway-java:1.4.4"
 
 }
