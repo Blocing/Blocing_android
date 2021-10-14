@@ -13,7 +13,12 @@ public class PreferencesSettings {
         editor.putString("code",str);
         editor.apply();
     }
-
+    public static void deletePref(Context context) {
+        final SharedPreferences pref = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        final SharedPreferences.Editor editor = pref.edit();
+        editor.remove("code");
+        editor.apply();
+    }
     public static String getCode(Context context){
         final SharedPreferences sharedPref = context.getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         final String defaultValue="";

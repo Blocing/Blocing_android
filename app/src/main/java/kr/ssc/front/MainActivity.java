@@ -54,7 +54,6 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "로그";
     private AppBarConfiguration mAppBarConfiguration;
     private NavController navController;
     private String idx;
@@ -68,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
@@ -149,14 +149,11 @@ public class MainActivity extends AppCompatActivity {
             // 내용이 있는 경우
             else {
                 try{
-                    String temp = result.getContents();
-
                     // data -> json
                     JSONObject obj = new JSONObject(result.getContents());
                     // qr코드 스캔 잘 된 경우
                     if(obj.has("idx")) {
                         idx = obj.getString("idx");
-//                        Log.d(TAG, "과목번호는 " + idx);
                         parsing();
                     }
                     // 다른 qr코드를 스캔한 경우
@@ -169,8 +166,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                     String temp = result.getContents();
-                    Toast.makeText(MainActivity.this, result.getContents(), Toast.LENGTH_SHORT)
-                            .show();
                 }
             }
         }
@@ -197,7 +192,6 @@ public class MainActivity extends AppCompatActivity {
             cursor.close();
             helper.close();
 
-            Log.d(TAG, "body : " + body);
 
 //            // 블록체인에 출석현황을 저장합시다~~!
             Retrofit retrofit = new Retrofit.Builder()
@@ -214,9 +208,7 @@ public class MainActivity extends AppCompatActivity {
             call.enqueue(new Callback<Integer>() {
                 @Override
                 public void onResponse(Call<Integer> call, Response<Integer> response) {
-                    Log.d(TAG, "onRESPONSE");
                     if(response.isSuccessful()) {
-                        Log.d(TAG, "MainActivity - onResponse() called BODY : " + response.body());
                         builder = new AlertDialog.Builder(MainActivity.this);
                         builder.setMessage("출석 체크 완료")
                                 .setCancelable(false)
@@ -230,14 +222,13 @@ public class MainActivity extends AppCompatActivity {
                                     }
                                 }).show();
                     }
-                    else {
-                        Log.d(TAG, "MainActivity - onResponse() called " + response.code());
-                    }
+                    else System.out.println("MainActivity - onResponse() called " + response.code());
+
                 }
 
                 @Override
                 public void onFailure(Call<Integer> call, Throwable t) {
-                    Log.d(TAG, "MainActivity - onFailure() called" + t.getMessage());
+                    System.out.println("MainActivity - onFailure() called" + t.getMessage());
                 }
             });
         } catch (Exception e) {

@@ -18,8 +18,11 @@
 
 
     <string name="join_service">서비스 가입</string>
-    <string name="apiaddress">http://192.168.35.11:6464</string> <!--집 와이파이-->
-    <!--        <string name="apiaddress">http://192.168.219.198:6464</string>-->
+<!--    <string name="apiaddress">https://3.138.215.161:6464</string>-->
+    <string name="apiaddress">https://blocing.o-r.kr:6464</string>
+
+<!--    <string name="apiaddress">http://192.168.35.11:6464</string> &lt;!&ndash;집 와이파이&ndash;&gt;-->
+<!--            <string name="apiaddress">http://192.168.219.198:6464</string>-->
     <!--        <string name="apiaddress">http://192.168.43.192:6464</string> &lt;!&ndash;휴대폰 Hotspot&ndash;&gt;-->
 
 

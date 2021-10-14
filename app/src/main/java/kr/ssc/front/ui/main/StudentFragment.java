@@ -33,7 +33,6 @@ import kr.ssc.front.ui.join.Student;
 
 // 학생증 눌렀을 경우 프래그먼트
 public class StudentFragment extends Fragment implements OnBackPressedListener {
-    private static final String TAG = "로그";
     private boolean first = true;
     private Student student;
     private String type;
@@ -94,7 +93,6 @@ public class StudentFragment extends Fragment implements OnBackPressedListener {
             helper.close();
 
             type = "issue";
-            // http:localhost:6464/idcard/{holderId}
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.idcard)+holder_id);
 
 
@@ -113,7 +111,7 @@ public class StudentFragment extends Fragment implements OnBackPressedListener {
             try{
                 result = downloadContents(strings[0]);
             }catch(Exception e){
-                Log.e(TAG, "doInBackground: " + e.getMessage());
+                System.out.println("doInBackground: " + e.getMessage());
             }
             return result;
         }
@@ -128,8 +126,6 @@ public class StudentFragment extends Fragment implements OnBackPressedListener {
         try{
             URL url = new URL(address);
             conn = (HttpURLConnection)url.openConnection();
-//            stream = getNetworkConnection(conn);
-//            result = readStreamToString(stream);
             if (stream != null) stream.close();
 
         }catch(Exception e){

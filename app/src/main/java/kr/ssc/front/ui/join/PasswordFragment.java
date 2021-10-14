@@ -1,6 +1,7 @@
 package kr.ssc.front.ui.join;
 
 import android.content.ContentValues;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -19,6 +20,9 @@ import androidx.navigation.Navigation;
 
 import com.beautycoder.pflockscreen.PFFLockScreenConfiguration;
 import com.beautycoder.pflockscreen.fragments.PFLockScreenFragment;
+import com.beautycoder.pflockscreen.security.PFResult;
+import com.beautycoder.pflockscreen.security.PFSecurityManager;
+import com.beautycoder.pflockscreen.security.callbacks.PFPinCodeHelperCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,8 +45,6 @@ import kr.ssc.front.R;
 import kr.ssc.front.ui.join.Student;
 
 public class PasswordFragment extends Fragment implements OnBackPressedListener {
-    private static final String TAG = "로그";
-
     private View root;
 
     private PFLockScreenFragment fragment;
@@ -53,6 +55,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
     private Student student;
     private String body;
     private Integer id;
+    private String did, name, studentId, university, department;
     private HolderDBHelper helper;
     private SQLiteDatabase db;
 
@@ -86,7 +89,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
                 PreferencesSettings.saveToPref(getActivity(), encodedCode);
                 //비밀번호까지 입력 완료 후 회원 등
                 parsing();
-//                Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_success);
             }
 
             @Override
@@ -135,7 +137,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
                 json.put("department", student.getDepartment());
 
                 body = json.toString();
-                System.out.println("BODY: "+body); //log
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -146,9 +147,7 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
             String result = null;
 
             try {
-                Log.d(TAG, "TEST 1");
                 result = downloadContents(Strings[0]);
-
             }
             catch (Exception e) {
                 // Error calling the rest api
@@ -161,18 +160,35 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(getContext(), result, Toast.LENGTH_SHORT).show();
             int holderId = parse(result);
-            Toast.makeText(getContext(), holderId+"", Toast.LENGTH_SHORT).show();
+            if(holderId == -1) {
+                Toast.makeText(getContext(), "존재하지 않는 정보입니다.", Toast.LENGTH_SHORT).show();
+                PreferencesSettings.deletePref(getActivity());
+                PFSecurityManager.getInstance().getPinCodeHelper().delete(
+                        new PFPinCodeHelperCallback<Boolean>() {
+                            @Override
+                            public void onResult(PFResult<Boolean> result) {
+                                Navigation.findNavController(root).navigate(R.id.action_password_to_nav_join_name);
+                            }
+                        }
+                );
+            }
+            else {
 
-            //스마트폰 내부 db에 holder id 저장
-            db = helper.getWritableDatabase();
-            ContentValues row = new ContentValues();
-            row.put(HolderDBHelper.getColHolderId(), holderId);
-            db.insert(HolderDBHelper.getTableName(), null, row);
-            helper.close();
+                //스마트폰 내부 db에 holder id 저장
+                // did,name,university,department
+                db = helper.getWritableDatabase();
+                ContentValues row = new ContentValues();
+                row.put(HolderDBHelper.getColHolderId(), holderId);
+                row.put(HolderDBHelper.getColHolderDid(), did);
+                row.put(HolderDBHelper.getColHolderName(), name);
+                row.put(HolderDBHelper.getColHolderUniversity(), university);
+                row.put(HolderDBHelper.getColHolderDepartment(), department);
+                db.insert(HolderDBHelper.getTableName(), null, row);
+                helper.close();
 
-            Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_success);
+                Navigation.findNavController(root).navigate(R.id.action_nav_join_password_to_nav_join_success);
+            }
         }
     }
 
@@ -183,13 +199,11 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
         String result = null;
 
         try {
-            Log.d(TAG, "TEST 2");
             URL url = new URL(address);
             conn = (HttpURLConnection)url.openConnection();
             stream = getNetworkConnection(conn);
             result = readStreamToString(stream);
             if (stream != null) stream.close();
-            Log.d(TAG, "TEST 7");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -202,7 +216,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
 
     // URLConnection 을 전달받아 연결정보 설정 후 연결, 연결 후 수신한 InputStream 반환
     private InputStream getNetworkConnection(HttpURLConnection conn) throws Exception {
-        Log.d(TAG, "TEST 3");
         // 클라이언트 아이디 및 시크릿 그리고 요청 URL 선언
         conn.setRequestMethod("POST");
         conn.setConnectTimeout(30000);
@@ -217,7 +230,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
         if (conn.getResponseCode() != HttpsURLConnection.HTTP_CREATED) {
             throw new IOException("HTTP error code: " + conn.getResponseCode());
         }
-        Log.d(TAG, "TEST 4");
         return conn.getInputStream();
     }
 
@@ -237,7 +249,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
     /* InputStream을 전달받아 문자열로 변환 후 반환 */
     protected String readStreamToString(InputStream stream){
         StringBuilder result = new StringBuilder();
-        Log.d(TAG, "TEST 5");
 
         try {
             InputStreamReader inputStreamReader = new InputStreamReader(stream);
@@ -251,7 +262,6 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
             }
 
             bufferedReader.close();
-            Log.d(TAG, "TEST 6");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -261,10 +271,17 @@ public class PasswordFragment extends Fragment implements OnBackPressedListener 
     //json parsing
     public Integer parse(String json){
         try{
-            ////{"success":"true" "holderId": 45}
             JSONObject object = new JSONObject(json);
-            //인증번호
-            id = object.getInt("HolderId");
+            String success = object.getString("success");
+            if(success.equals("failed")) id = -1;
+            else {
+                id = object.getInt("HolderId");
+                did = object.getString("CardDid");
+                name = object.getString("name");
+                studentId = object.getString("studentId");
+                university = object.getString("university");
+                department = object.getString("department");
+            }
         } catch (JSONException e){
             e.printStackTrace();
         }

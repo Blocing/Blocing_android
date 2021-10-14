@@ -9,7 +9,11 @@ public class HolderDBHelper extends SQLiteOpenHelper {
     private final static String TABLE_NAME = "holder_table";
     private final static String COL_ID = "_id";
     private static final String COL_HOLDER_ID = "holder_id";
-
+    private static final String COL_HOLDER_DID = "holder_did";
+    private static final String COL_HOLDER_NAME = "holder_name";
+    private static final String COL_HOLDER_UNIVERSITY = "holder_university";
+    private static final String COL_HOLDER_DEPARTMENT = "holder_department";
+    // did,name,university,department
     public HolderDBHelper(Context context){
         super(context, DB_NAME, null, 1);
     }
@@ -17,8 +21,7 @@ public class HolderDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("create table " + TABLE_NAME + " ( " + COL_ID + " integer primary key autoincrement,"
-                + COL_HOLDER_ID + " TEXT);");
-
+                + COL_HOLDER_ID + " TEXT," + COL_HOLDER_DID + " TEXT," + COL_HOLDER_NAME + " TEXT," + COL_HOLDER_UNIVERSITY + " TEXT," + COL_HOLDER_DEPARTMENT + " TEXT" + ");");
     }
 
     @Override
@@ -33,5 +36,17 @@ public class HolderDBHelper extends SQLiteOpenHelper {
 
     public static String getColHolderId() {
         return COL_HOLDER_ID;
+    }
+    public static String getColHolderDid() {
+        return COL_HOLDER_DID;
+    }
+    public static String getColHolderName() {
+        return COL_HOLDER_NAME;
+    }
+    public static String getColHolderUniversity() {
+        return COL_HOLDER_UNIVERSITY;
+    }
+    public static String getColHolderDepartment() {
+        return COL_HOLDER_DEPARTMENT;
     }
 }

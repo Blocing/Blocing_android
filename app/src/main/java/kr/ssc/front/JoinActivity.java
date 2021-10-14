@@ -3,6 +3,7 @@ package kr.ssc.front;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.WindowManager;
 
 public class JoinActivity extends AppCompatActivity {
 
@@ -10,9 +11,9 @@ public class JoinActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_SECURE);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_join);
-
     }
 
     public void setOnBackPressedListener(OnBackPressedListener listener){

@@ -121,7 +121,6 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         btnNext.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Navigation.findNavController(root).navigate(R.id.action_nav_join_to_nav_join_password);
                 //인증 여부 확인
                 if(check){
                     Navigation.findNavController(root).navigate(R.id.action_nav_join_to_nav_join_password);
@@ -162,9 +161,6 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
     //이메일 인증 전송
     public void parsing() {
         try {
-            // log
-            //Toast.makeText(activity, getResources().getString(R.string.apiaddress)+getResources().getString(R.string.email_send), Toast.LENGTH_SHORT).show();
-
             new RestAPITask().execute(getResources().getString(R.string.apiaddress)+getResources().getString(R.string.email_send));
         } catch (Exception e) {
             e.printStackTrace();
@@ -189,12 +185,9 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
             String result = null;
 
             try {
-                //http://localhost:6464/user/email/send
-                System.out.println(Strings[0]);
                 result = downloadContents(Strings[0]);
             }
             catch (Exception e) {
-                // Error calling the rest api
                 Log.e("REST_API", "POST method failed: " + e.getMessage());
                 e.printStackTrace();
             }
@@ -203,8 +196,6 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         //작업 완료
         @Override
         protected void onPostExecute(String result) {
-            Toast.makeText(activity, "result"+result, Toast.LENGTH_SHORT).show();
-            //{"success":true "authCode": "888888"}
             parse(result);
             builder = new AlertDialog.Builder(getContext());
 
@@ -225,15 +216,10 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         String result = null;
 
         try {
-            System.out.println("downloadContent 함수");
-            System.out.println(address);
             URL url = new URL(address);
             conn = (HttpURLConnection)url.openConnection();
-            System.out.println("1");
             stream = getNetworkConnection(conn);
-            System.out.println("7");
             result = readStreamToString(stream);
-            System.out.println("10");
             if (stream != null)
                 stream.close();
         } catch (Exception e) {
@@ -243,14 +229,12 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 conn.disconnect();
             }
         }
-        System.out.println("11");
         return result;
     }
 
 //    // URLConnection 을 전달받아 연결정보 설정 후 연결, 연결 후 수신한 InputStream 반환
     private InputStream getNetworkConnection(HttpURLConnection conn) throws Exception {
         // 클라이언트 아이디 및 시크릿 그리고 요청 URL 선언
-        System.out.println("getNetworkConnection 함수");
         conn.setRequestMethod("POST");
         conn.setRequestProperty("content-type", "application/json");
         conn.setRequestProperty("Accept", "application/json");
@@ -260,40 +244,31 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         conn.setDoOutput(true);
         conn.setUseCaches(false);
         conn.setDefaultUseCaches(false);
-        System.out.println("2");
         conn.connect();
         writeStream(conn);
-        System.out.println("5");
 
         if (conn.getResponseCode() != HttpsURLConnection.HTTP_CREATED) {
             throw new IOException("HTTP error code: " + conn.getResponseCode());
         }
-        System.out.println("6");
         return conn.getInputStream();
     }
 
     protected void writeStream(HttpURLConnection conn) {
         try {
-            System.out.println("writeStream 함수");
-            System.out.println("3");
             OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
             wr.write(body); //json 형식의 메세지 전달
             wr.flush();
             wr.close();
             System.out.println("body"+body);
-            System.out.println("4");
         }  catch (IOException e) {
             e.printStackTrace();
         }
     }
-//
 //    /* InputStream을 전달받아 문자열로 변환 후 반환 */
     protected String readStreamToString(InputStream stream){
         StringBuilder result = new StringBuilder();
 
         try {
-            System.out.println("readStreamToString 함수");
-            System.out.println("8");
             InputStreamReader inputStreamReader = new InputStreamReader(stream);
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
 
@@ -303,25 +278,18 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 result.append(readLine + "\n");
                 readLine = bufferedReader.readLine();
             }
-            System.out.println("9");
             bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("10");
         return result.toString();
     }
-//
 //    //json parsing
     public void parse(String json){
         try{
-            ////{"success":"true" "authCode": "888888"}
-            System.out.println("json : "+ json);
             JSONObject object = new JSONObject(json);
-            System.out.println("object : " + object);
             //인증번호
             rand = object.getString("authCode");
-            System.out.println("rand : "+rand);
         } catch (JSONException e){
             e.printStackTrace();
         }

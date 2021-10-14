@@ -57,17 +57,13 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
     private String holder_id;
     private String type;
     private int idx = -1;
-    private static final String TAG = "로그";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         root = inflater.inflate(R.layout.fragment_list_attendance, container, false);
-//        FragmentListAttendanceBinding root = DataBindingUtil.inflate(inflater, R.layout.fragment_list_attendance, container, false);
         activity = (MainActivity) getActivity();
 
-        Log.d(TAG, "1번");
         subjectList = new ArrayList<>();
         subjectList.add("수업을 선택해주세요.");
 
@@ -94,7 +90,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                 attendances.clear();
 
                 idx = position;
-                Log.d(TAG, "TTTTTT : " + idx);
                 if (idx != 0) {
                     // 출석 이력 가져오기
                     type = "attendance";
@@ -109,7 +104,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
         });
 
 
-//        return root.getRoot();
         return root;
     }
 
@@ -140,7 +134,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                     @Override
                     public void onResponse(Call<List<Class>> call, Response<List<Class>> response) {
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "강좌 과목 가져오기");
                             List<Class> source = response.body();
                             for (Class src : source) subjectList.add(src.getName());
                             subjectAdapter.notifyDataSetChanged();
@@ -151,12 +144,12 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                                 if(idx != 0) spinner.setSelection(idx);
                             }
                         }
-                        else Log.d(TAG, "ListAttendanceFragment - onResponse() called " + response.code());
+                        else System.out.println("ListAttendanceFragment - onResponse() called " + response.code());
                     }
 
                     @Override
                     public void onFailure(Call<List<Class>> call, Throwable t) {
-                        Log.d(TAG, "ListAttendanceFragment - onFailure() called : " + t.getMessage());
+                        System.out.println("ListAttendanceFragment - onFailure() called : " + t.getMessage());
                     }
                 });
             }
@@ -167,7 +160,6 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                 cursor.moveToNext();
 
                 String holder_id = cursor.getString(cursor.getColumnIndex("holder_id"));
-                Log.d(TAG, "주인번호 : " + holder_id);
                 cursor.close();
                 helper.close();
 
@@ -183,23 +175,16 @@ public class ListAttendanceFragment extends Fragment implements OnBackPressedLis
                     @Override
                     public void onResponse(Call<ArrayList<Attendance>> call, Response<ArrayList<Attendance>> response) {
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "출석 현황 가져오기");
                             ArrayList<Attendance> source = response.body();
-                            Log.d(TAG, "ListAttendanceFragment - onResponse() called " + source);
-//                            for (Attendance src : source) {
-//                                Log.d(TAG, "ListAttendanceFragment - onResponse() called " + src.getAttendance_state());
-//                                Log.d(TAG, "ListAttendanceFragment - onResponse() called " + src.getAttendance_time());
-//                                Log.d(TAG, "ListAttendanceFragment - onResponse() called " + src.getClass_id());
-//                            }
                             attendanceAdapter.setList(source);
                             lvAttendance.setAdapter(attendanceAdapter);
                         }
-                        else Log.d(TAG, "ListAttendanceFragment - onResponse() called " + response.code());
+                        else System.out.println("ListAttendanceFragment - onResponse() called " + response.code());
                     }
 
                     @Override
                     public void onFailure(Call<ArrayList<Attendance>> call, Throwable t) {
-                        Log.d(TAG, "ListAttendanceFragment - onFailure() called : " + t.getMessage());
+                        System.out.println("ListAttendanceFragment - onFailure() called : " + t.getMessage());
                     }
                 });
             }

@@ -2,12 +2,22 @@ apply plugin: 'com.android.application'
 apply plugin: "androidx.navigation.safeargs"
 
 android {
+//    packagingOptions {
+//        exclude 'META-INF/INDEX.LIST'
+//        exclude 'META-INF/DEPENDENCIES'
+//        exclude 'META-INF/licenses/**'
+//        exclude 'META-INF/AL2.0'
+//        exclude 'META-INF/LGPL2.1'
+//        exclude 'META-INF/org/apache/logging/log4j/core/config/plugins/Log4j2Plugins.dat'
+//        exclude 'META-INF/io.netty.versions.properties'
+//    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "kr.ssc.front"
-        minSdkVersion 21
+        minSdkVersion 26
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
@@ -25,76 +35,43 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-
-//    packagingOptions {
-//        exclude 'META-INF/DEPENDENCIES'
-//        exclude 'META-INF/LICENSE'
-//        exclude 'META-INF/LICENSE.txt'
-//        exclude 'META-INF/license.txt'
-//        exclude 'META-INF/NOTICE'
-//        exclude 'META-inF/NOTICE.txt'
-//        exclude 'META-INF/INDEX.LIST'
-//        exclude 'META-INF/notice.txt'
-//        exclude 'META-INF/ASL2.0'
-//    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
-    implementation 'androidx.navigation:navigation-fragment:2.3.1'
-    implementation 'androidx.navigation:navigation-ui:2.3.1'
-    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
-// PIN 인증
-    implementation 'com.github.thealeksandr:PFLockScreen-Android:1.0.0-beta7'
-// Android security
-//    implementation 'androidx.security:security-crypto:1.1.0-alpha02'
 
-// For Identity Credential APIs
- //   implementation "androidx.security:security-identity-credential:1.0.0-alpha01"
+    implementation 'androidx.navigation:navigation-fragment:2.3.1'
+    implementation 'androidx.navigation:navigation-ui:2.3.1'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
+
+
+    // PIN 인증
+    implementation 'com.github.thealeksandr:PFLockScreen-Android:1.0.0-beta7'
     compileOnly 'org.projectlombok:lombok:1.18.8'
     annotationProcessor 'org.projectlombok:lombok:1.18.8'
 
 
+//    implementation 'org.hyperledger.fabric:fabric-gateway-java:1.4.4'
     // Retrofit 라이브러리
     implementation 'com.squareup.retrofit2:retrofit:2.6.4'
-
-// Gson 변환기 라이브러리
+    // Gson 변환기 라이브러리
     implementation 'com.squareup.retrofit2:converter-gson:2.6.4'
-
-// Scalars 변환기 라이브러리
+    // Scalars 변환기 라이브러리
     implementation 'com.squareup.retrofit2:converter-scalars:2.6.4'
-
-//    qr코드 라이브러리 사용
+    // qr코드 라이브러리 사용
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
-
-//    Room 데이터베이스
+    // Room 데이터베이스
     def room_version = "2.2.6"
-
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
-
-//    블록체인인 클라이언트
-//    def fabric_sdk = "1.4.4"
-//    def logback = "1.2.3"
-//    def lombok = "1.18.12"
-//    def protobuf = "3.11.0"
-//    def jackson = "2.10.0"
-//    def caffeine = "2.8.1"
-//    def jakarta = "2.3.3"
-//    implementation("org.hyperledger.fabric-sdk-java:fabric-sdk-java:$fabric_sdk")
-//    implementation("ch.qos.logback:logback-classic:$logback")
-//    annotationProcessor("org.projectlombok:lombok:$lombok")
-//    implementation("com.google.protobuf:protobuf-java:$protobuf")
-//    implementation("com.fasterxml.jackson.core:jackson-databind:$jackson")
-//    implementation("com.github.ben-manes.caffeine:caffeine:$caffeine")
-//    implementation("jakarta.xml.bind:jakarta.xml.bind-api:$jakarta")
-//    implementation "org.hyperledger.fabric:fabric-gateway-java:1.4.4"
-
 }

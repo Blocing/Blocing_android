@@ -46,17 +46,10 @@ public class NameFragment extends Fragment implements OnBackPressedListener  {
         etDepartment = root.findViewById(R.id.edit_department);
         btnNext = root.findViewById(R.id.btn_join_name);
 
-        //삭제
-        //etSchool.setText("길동대학교");
-        //etName.setText("홍길동");
-        //etDepartment.setText("컴퓨터학과");
-        //etNum.setText("20200001");
-
         //가입하기
         btnNext.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Navigation.findNavController(root).navigate(R.id.action_nav_join_name_to_nav_join_password);
                 Student student = new Student();
                 student.setName(String.valueOf(etName.getText()));
                 student.setStudent_id(String.valueOf(etNum.getText()));
