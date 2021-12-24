@@ -8,7 +8,7 @@
 <!--    가입-->
     <fragment
         android:id="@+id/nav_join_email"
-        android:name="kr.ssc.front.ui.join.EmailFragment"
+        android:name="kr.ssc.front.ui.join.SmsFragment"
         android:label="@string/join_service"
         tools:layout="@layout/fragment_join_email">
 

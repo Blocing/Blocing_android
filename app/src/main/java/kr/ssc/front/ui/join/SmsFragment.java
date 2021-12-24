@@ -40,7 +40,7 @@ import kr.ssc.front.OnBackPressedListener;
 import kr.ssc.front.R;
 
 
-public class EmailFragment extends Fragment implements OnBackPressedListener {
+public class SmsFragment extends Fragment implements OnBackPressedListener {
 
     private EditText etEmail;
     private EditText etCheck;
@@ -269,9 +269,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
         StringBuilder result = new StringBuilder();
 
         try {
-            InputStreamReader inputStreamReader = new InputStreamReader(stream);
-            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
-
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(stream));
             String readLine = bufferedReader.readLine();
 
             while (readLine != null) {
