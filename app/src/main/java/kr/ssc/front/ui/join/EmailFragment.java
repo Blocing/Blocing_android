@@ -78,11 +78,11 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                 String stEmail = etEmail.getText().toString();
 
                 if(stEmail.equals("")){
-                    Toast.makeText(getContext(), "이메일을 입력해주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "휴대폰 번호를 입력해주세요.", Toast.LENGTH_SHORT).show();
                 } else {
                     //이메일 전송
                     parsing();
-                    Toast.makeText(getContext(), "이메일을 전송합니다.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "전송되었습니다.", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -126,7 +126,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
                     Navigation.findNavController(root).navigate(R.id.action_nav_join_to_nav_join_password);
                 }
                 else {
-                    Toast.makeText(getContext(), "이메일 인증을 먼저 해주세요", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "인증 번호를 먼저 해주세요", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -199,7 +199,7 @@ public class EmailFragment extends Fragment implements OnBackPressedListener {
             parse(result);
             builder = new AlertDialog.Builder(getContext());
 
-            builder.setMessage("인증 메일이 전송되었습니다.")
+            builder.setMessage("인증 번호가 전송되었습니다.")
                     .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
